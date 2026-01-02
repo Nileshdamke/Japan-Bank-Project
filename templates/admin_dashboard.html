@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="mb-4">Admin Panel - User Management</h1>
+<div class="row mb-3">
+    <div class="col-md-6">
+        <a href="{{ url_for('deposit') }}" class="btn btn-success"><i class="bi bi-plus-circle"></i> Deposit Money</a>
+    </div>
+    <div class="col-md-6">
+        <form method="GET" action="{{ url_for('admin_dashboard') }}" class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search by name or username" name="search" value="{{ search_query }}">
+            <button class="btn btn-outline-primary" type="submit">Search</button>
+        </form>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">All Users</h4>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Account Number</th>
+                        <th>Balance</th>
+                        <th>Is Employee?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.account.account_number }}</td>
+                        <td>${{ "%.2f"|format(user.account.balance) }}</td>
+                        <td>
+                            {% if user.is_employee %}
+                                <span class="badge bg-primary">Yes</span>
+                            {% else %}
+                                <span class="badge bg-secondary">No</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

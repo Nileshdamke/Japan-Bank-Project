@@ -1,0 +1,24 @@
+user  nginx;
+worker_processes  auto;
+
+events { worker_connections 1024; }
+
+http {
+    sendfile on;
+
+    server {
+        listen 80;
+
+        # Serve static files
+        location /static/ {
+            alias /app/static/;
+        }
+
+        # Pass everything else to Gunicorn
+        location / {
+            proxy_pass http://127.0.0.1:8000;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+    }
+}

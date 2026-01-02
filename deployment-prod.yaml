@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-prod-deployment
+spec:
+  replicas: 3  # production me scale karne ke liye
+  selector:
+    matchLabels:
+      app: flask-prod
+  template:
+    metadata:
+      labels:
+        app: flask-prod
+    spec:
+      containers:
+        - name: flask-prod
+          image: flaskprodimage   
+          ports:
+            - containerPort: 80     
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-prod-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: flask-prod
+  ports:
+    - port: 80       # public port
+      targetPort: 80
+...

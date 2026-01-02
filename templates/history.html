@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">Full Transaction History</h2>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tx in transactions.items %}
+                    <tr>
+                        <td>{{ tx.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>
+                            <span class="badge bg-{{ 'success' if tx.type == 'credit' else 'danger' }}">
+                                {{ tx.type|capitalize }}
+                            </span>
+                        </td>
+                        <td>${{ "%.2f"|format(tx.amount) }}</td>
+                        <td>{{ tx.description }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- Pagination -->
+        <nav aria-label="Transaction history navigation">
+            <ul class="pagination justify-content-center">
+                {% if transactions.has_prev %}
+                    <li class="page-item"><a class="page-link" href="{{ url_for('history', page=transactions.prev_num) }}">Previous</a></li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">Previous</span></li>
+                {% endif %}
+
+                {% for page_num in transactions.iter_pages() %}
+                    {% if page_num %}
+                        <li class="page-item {{ 'active' if page_num == transactions.page else '' }}">
+                            <a class="page-link" href="{{ url_for('history', page=page_num) }}">{{ page_num }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if transactions.has_next %}
+                    <li class="page-item"><a class="page-link" href="{{ url_for('history', page=transactions.next_num) }}">Next</a></li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">Next</span></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>
+{% endblock %}
