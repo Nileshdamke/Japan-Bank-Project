@@ -255,6 +255,14 @@ def index():
         return redirect(url_for('dashboard'))
     return render_template('index.html')
 
+# =========================
+# 🔴 NEW ROUTE (ADDED)
+# ALB HEALTH CHECK KE LIYE
+# =========================
+@app.route("/health")
+def health():
+    return "OK", 200   # <-- YE LINE ADD KI HAI
+
 # --- Authentication Routes ---
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -607,5 +615,5 @@ if __name__ == '__main__':
             db.session.commit()
             print("Admin user 'BOJADMIN' with password 'AdminPass123!' created.")
 
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=80, debug=True)
 
