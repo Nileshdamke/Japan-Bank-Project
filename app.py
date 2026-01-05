@@ -615,5 +615,5 @@ if __name__ == '__main__':
             db.session.commit()
             print("Admin user 'BOJADMIN' with password 'AdminPass123!' created.")
 
-    app.run(host="0.0.0.0", port=80, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
 
