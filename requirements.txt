@@ -9,6 +9,17 @@ SQLAlchemy==1.4.46
 WTForms==3.0.1
 email-validator==2.0.0.post2
 Werkzeug==2.2.2
+python-dotenv==1.0.1
+
+# =========================
+# 🔴 NEWLY ADDED (IMPORTANT)
+# =========================
+openai==1.12.0              # 🔴 langchain-openai ke liye REQUIRED
+langchain-core==0.1.45      # 🔴 prompt, parser ke liye
+langchain-community==0.0.34 # 🔴 internal dependencies fix ke liye
+
+# =========================
+# 🔴 UPDATED / ALREADY USED
+# =========================
 langchain==0.1.16
 langchain-openai==0.1.3
-python-dotenv==1.0.1
