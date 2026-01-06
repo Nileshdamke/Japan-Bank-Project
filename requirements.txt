@@ -11,15 +11,11 @@ email-validator==2.0.0.post2
 Werkzeug==2.2.2
 python-dotenv==1.0.1
 
-# =========================
-# 🔴 NEWLY ADDED (IMPORTANT)
-# =========================
-openai==1.12.0              # 🔴 langchain-openai ke liye REQUIRED
-langchain-core==0.1.45      # 🔴 prompt, parser ke liye
-langchain-community==0.0.34 # 🔴 internal dependencies fix ke liye
+gunicorn==21.2.0
+pymysql==1.1.0
 
-# =========================
-# 🔴 UPDATED / ALREADY USED
-# =========================
+openai==1.12.0
 langchain==0.1.16
+langchain-core==0.1.45
+langchain-community==0.0.34
 langchain-openai==0.1.3

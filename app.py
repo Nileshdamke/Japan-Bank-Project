@@ -29,8 +29,11 @@ app = Flask(__name__, static_folder='static')
 # Secret key for session management and CSRF protection
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'a_secure_random_secret_key_for_dev')
 # Database configuration (SQLite for simplicity)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bank.db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bank.db' --> for sqLite
+# Database configuration (RDS MySQL)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = { "pool_pre_ping": True }
 
 # --- LOCAL EMAIL CONFIGURATION FOR TESTING ---
 # This setup sends emails to a local debugging server instead of a real one.
@@ -585,7 +588,7 @@ def chat():
     except Exception as e:
         print(f"Chatbot error: {e}")
         return jsonify({'error': 'Sorry, I am having trouble connecting to the AI service.'}), 500
-
+"""
 # --- MAIN EXECUTION ---
 if __name__ == '__main__':
     with app.app_context():
@@ -615,5 +618,6 @@ if __name__ == '__main__':
             db.session.commit()
             print("Admin user 'BOJADMIN' with password 'AdminPass123!' created.")
 
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000)
 
+"""
